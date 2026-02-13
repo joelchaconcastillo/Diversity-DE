@@ -32,7 +32,7 @@ def main():
         pop_size=pop_size,
         F=0.8,                    # Differential weight
         CR=0.9,                   # Crossover probability
-        diversity_weight=0.3,     # Diversity promotion weight
+        diversity_weight=0.1,     # Lower diversity for unimodal function
         device=device,
         seed=42,                  # For reproducibility
     )
@@ -42,6 +42,7 @@ def main():
         max_iterations=max_iterations,
         tolerance=1e-8,
         verbose=True,
+        min_iterations=100,  # Ensure sufficient iterations
     )
     
     # Display results
