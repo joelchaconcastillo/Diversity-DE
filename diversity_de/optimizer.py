@@ -326,8 +326,10 @@ class DiversityDE:
                       f"Mean = {self.fitness.mean():.6e}, "
                       f"Diversity = {self.diversity_history[-1]:.6e}")
             
-            # Check convergence (only after minimum iterations)
-            if iteration >= min_iterations and abs(history['best_fitness'][-1] - history['best_fitness'][-2]) < tolerance:
+            # Check convergence (only after minimum iterations and when we have enough history)
+            if (iteration >= min_iterations and 
+                len(history['best_fitness']) >= 2 and
+                abs(history['best_fitness'][-1] - history['best_fitness'][-2]) < tolerance):
                 if verbose:
                     print(f"\nConverged at iteration {iteration + 1}")
                 break
