@@ -272,6 +272,7 @@ class DiversityDE:
         max_iterations: int = 1000,
         tolerance: float = 1e-6,
         verbose: bool = True,
+        min_iterations: int = 10,
     ) -> Tuple[torch.Tensor, float, dict]:
         """
         Run the optimization process.
@@ -284,6 +285,8 @@ class DiversityDE:
             Convergence tolerance (default: 1e-6)
         verbose : bool, optional
             Whether to print progress (default: True)
+        min_iterations : int, optional
+            Minimum number of iterations before checking convergence (default: 10)
             
         Returns
         -------
@@ -323,8 +326,8 @@ class DiversityDE:
                       f"Mean = {self.fitness.mean():.6e}, "
                       f"Diversity = {self.diversity_history[-1]:.6e}")
             
-            # Check convergence
-            if iteration > 0 and abs(history['best_fitness'][-1] - history['best_fitness'][-2]) < tolerance:
+            # Check convergence (only after minimum iterations)
+            if iteration >= min_iterations and abs(history['best_fitness'][-1] - history['best_fitness'][-2]) < tolerance:
                 if verbose:
                     print(f"\nConverged at iteration {iteration + 1}")
                 break
